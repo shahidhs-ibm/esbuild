@@ -298,6 +298,9 @@ platform-linux-mips64le:
 platform-linux-ppc64le:
 	make GOOS=linux GOARCH=ppc64le NPMDIR=npm/esbuild-linux-ppc64le platform-unixlike
 
+platform-linux-s390x:
+	make GOOS=linux GOARCH=s390x NPMDIR=npm/esbuild-linux-ppc64le platform-unixlike
+
 platform-sunos:
 	make GOOS=illumos GOARCH=amd64 NPMDIR=npm/esbuild-sunos-64 platform-unixlike
 
@@ -351,7 +354,8 @@ publish-all: cmd/esbuild/version.go test-prepublish
 	@read OTP && OTP="$$OTP" make -j4 \
 		publish-linux-arm64 \
 		publish-linux-mips64le \
-		publish-linux-ppc64le
+		publish-linux-ppc64le \
+		publish-linux-s390x
 
 	# Do these last to avoid race conditions
 	@echo Enter one-time password:
@@ -412,6 +416,9 @@ publish-linux-mips64le: platform-linux-mips64le
 publish-linux-ppc64le: platform-linux-ppc64le
 	test -n "$(OTP)" && cd npm/esbuild-linux-ppc64le && npm publish --otp="$(OTP)"
 
+publish-linux-s390x: platform-linux-s390x
+	test -n "$(OTP)" && cd npm/esbuild-linux-s390x && npm publish --otp="$(OTP)"
+
 publish-sunos: platform-sunos
 	test -n "$(OTP)" && cd npm/esbuild-sunos-64 && npm publish --otp="$(OTP)"
 
@@ -447,6 +454,7 @@ clean:
 	rm -rf npm/esbuild-linux-arm64/bin
 	rm -rf npm/esbuild-linux-mips64le/bin
 	rm -rf npm/esbuild-linux-ppc64le/bin
+	rm -rf npm/esbuild-linux-s390x/bin
 	rm -rf npm/esbuild-sunos-64/bin
 	rm -f npm/esbuild-wasm/esbuild.wasm npm/esbuild-wasm/wasm_exec.js
 	rm -rf npm/esbuild/lib
