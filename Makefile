@@ -235,6 +235,7 @@ platform-all: cmd/esbuild/version.go
 		platform-linux-arm64 \
 		platform-linux-mips64le \
 		platform-linux-ppc64le \
+		platform-linux-s390x \
 		platform-sunos \
 		platform-wasm \
 		platform-neutral \
